@@ -1,7 +1,6 @@
 // Admin Panel JavaScript
 // This file handles all admin panel functionality
-
-const API_BASE_URL = window.location.origin + '/api';
+// Note: API_BASE_URL is defined in app.js which loads after this file
 
 // State management
 const adminState = {
