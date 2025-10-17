@@ -144,14 +144,20 @@ function displayResults(data) {
                 <div class="submissions">
                     ${group.submissions.map(sub => `
                         <div class="submission-item">
-                            <div class="submission-filename">${escapeHtml(sub.filename)}</div>
+                            <div class="submission-header">
+                                <div class="submission-filename">${escapeHtml(sub.filename)}</div>
+                                <div class="vote-buttons">
+                                    <button class="vote-btn upvote" data-submission-id="${sub.id}" data-vote-type="1">
+                                        👍 <span class="vote-count">${sub.upvotes}</span>
+                                    </button>
+                                    <button class="vote-btn downvote" data-submission-id="${sub.id}" data-vote-type="-1">
+                                        👎 <span class="vote-count">${sub.downvotes}</span>
+                                    </button>
+                                </div>
+                            </div>
                             <div class="submission-meta">
                                 <span>👤 ${escapeHtml(sub.username)}</span>
-                                <span class="votes">
-                                    <span class="vote-up">👍 ${sub.upvotes}</span>
-                                    <span class="vote-down">👎 ${sub.downvotes}</span>
-                                    <span>Score: ${sub.vote_score}</span>
-                                </span>
+                                <span class="vote-score">Score: ${sub.vote_score}</span>
                             </div>
                         </div>
                     `).join('')}
@@ -161,6 +167,95 @@ function displayResults(data) {
     }).join('');
 
     resultsContainer.style.display = 'block';
+
+    // Attach vote button event listeners
+    attachVoteListeners();
+}
+
+// Attach event listeners to vote buttons
+function attachVoteListeners() {
+    const voteButtons = document.querySelectorAll('.vote-btn');
+    voteButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const submissionId = parseInt(button.dataset.submissionId);
+            const voteType = parseInt(button.dataset.voteType);
+            await handleVote(submissionId, voteType, button);
+        });
+    });
+}
+
+// Handle voting
+async function handleVote(submissionId, voteType, button) {
+    // Disable button during request
+    button.disabled = true;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/vote`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                submission_id: submissionId,
+                vote_type: voteType
+            })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Vote failed');
+        }
+
+        const result = await response.json();
+
+        // Update both vote count buttons
+        const submissionItem = button.closest('.submission-item');
+        const upvoteBtn = submissionItem.querySelector('.vote-btn.upvote .vote-count');
+        const downvoteBtn = submissionItem.querySelector('.vote-btn.downvote .vote-count');
+
+        if (upvoteBtn) {
+            upvoteBtn.textContent = result.upvotes;
+        }
+        if (downvoteBtn) {
+            downvoteBtn.textContent = result.downvotes;
+        }
+
+        // Update the score display
+        const scoreSpan = submissionItem.querySelector('.vote-score');
+        if (scoreSpan) {
+            scoreSpan.textContent = `Score: ${result.vote_score}`;
+        }
+
+        // Add voted state to the clicked button
+        button.classList.add('voted');
+
+        // Show success feedback
+        showVoteFeedback(submissionItem, 'Vote recorded!', 'success');
+
+    } catch (error) {
+        console.error('Vote failed:', error);
+        showVoteFeedback(button.closest('.submission-item'), error.message, 'error');
+    } finally {
+        // Re-enable button
+        button.disabled = false;
+    }
+}
+
+// Show vote feedback message
+function showVoteFeedback(element, message, type) {
+    const feedback = document.createElement('div');
+    feedback.className = type === 'success' ? 'success' : 'error';
+    feedback.textContent = message;
+    feedback.style.marginTop = '0.5rem';
+    feedback.style.fontSize = '0.85rem';
+
+    element.appendChild(feedback);
+
+    // Remove feedback after 3 seconds
+    setTimeout(() => {
+        feedback.remove();
+    }, 3000);
 }
 
 // Group results by title/year/media_type

@@ -188,7 +188,23 @@ func (h *Handler) VoteHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respondSuccess(w, "vote recorded")
+	// Get updated submission with vote counts
+	submission, err := h.db.GetSubmissionByID(req.SubmissionID)
+	if err != nil {
+		respondError(w, http.StatusInternalServerError, "failed to get submission")
+		return
+	}
+
+	// Return updated vote counts
+	response := map[string]interface{}{
+		"success":    true,
+		"message":    "vote recorded",
+		"upvotes":    submission.Upvotes,
+		"downvotes":  submission.Downvotes,
+		"vote_score": submission.VoteScore,
+	}
+
+	respondJSON(w, http.StatusOK, response)
 }
 
 // DeleteVoteHandler handles removing a vote
