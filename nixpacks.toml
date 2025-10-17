@@ -1,0 +1,12 @@
+[phases.setup]
+nixPkgs = ["go_1_22"]
+
+[phases.build]
+cmds = [
+  "mkdir -p bin",
+  "go mod download",
+  "go build -o bin/mkvmender-server ./cmd/server"
+]
+
+[start]
+cmd = "./bin/mkvmender-server"

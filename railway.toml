@@ -1,5 +1,6 @@
 [build]
 builder = "nixpacks"
+buildCommand = "mkdir -p bin && go build -o bin/mkvmender-server ./cmd/server"
 
 [deploy]
 startCommand = "./bin/mkvmender-server"
