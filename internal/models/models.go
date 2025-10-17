@@ -18,11 +18,22 @@ const (
 	VoteUp   VoteType = 1
 )
 
+// UserRole represents user permission levels
+type UserRole string
+
+const (
+	RoleUser      UserRole = "user"
+	RoleModerator UserRole = "moderator"
+	RoleAdmin     UserRole = "admin"
+)
+
 // User represents a user in the system
 type User struct {
 	ID        int64     `json:"id"`
 	Username  string    `json:"username"`
 	APIKey    string    `json:"api_key,omitempty"`
+	Role      UserRole  `json:"role"`
+	IsActive  bool      `json:"is_active"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -148,4 +159,56 @@ type SearchResult struct {
 type SearchResponse struct {
 	Query   string         `json:"query"`
 	Results []SearchResult `json:"results"`
+}
+
+// ModerationAction represents an admin action
+type ModerationAction struct {
+	ID         int64     `json:"id"`
+	AdminID    int64     `json:"admin_id"`
+	ActionType string    `json:"action_type"`
+	TargetType string    `json:"target_type"`
+	TargetID   int64     `json:"target_id"`
+	Reason     *string   `json:"reason,omitempty"`
+	CreatedAt  time.Time `json:"created_at"`
+}
+
+// AdminStats represents system statistics for admin dashboard
+type AdminStats struct {
+	TotalUsers       int `json:"total_users"`
+	ActiveUsers      int `json:"active_users"`
+	TotalSubmissions int `json:"total_submissions"`
+	TotalVotes       int `json:"total_votes"`
+	PendingActions   int `json:"pending_actions"`
+}
+
+// AdminSubmissionListItem represents a submission in the admin list
+type AdminSubmissionListItem struct {
+	SubmissionWithVotes
+	UserRole UserRole `json:"user_role"`
+}
+
+// AdminUserListItem represents a user in the admin list
+type AdminUserListItem struct {
+	ID               int64     `json:"id"`
+	Username         string    `json:"username"`
+	Role             UserRole  `json:"role"`
+	IsActive         bool      `json:"is_active"`
+	SubmissionCount  int       `json:"submission_count"`
+	CreatedAt        time.Time `json:"created_at"`
+}
+
+// ChangeRoleRequest represents a request to change user role
+type ChangeRoleRequest struct {
+	Role UserRole `json:"role"`
+}
+
+// ChangeStatusRequest represents a request to change user active status
+type ChangeStatusRequest struct {
+	IsActive bool    `json:"is_active"`
+	Reason   *string `json:"reason,omitempty"`
+}
+
+// DeleteSubmissionRequest represents a request to delete a submission
+type DeleteSubmissionRequest struct {
+	Reason *string `json:"reason,omitempty"`
 }

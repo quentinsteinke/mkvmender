@@ -69,6 +69,26 @@ func CORSMiddleware(next http.Handler) http.Handler {
 	})
 }
 
+// AdminMiddleware checks if user has admin or moderator role
+// Must be used after AuthMiddleware
+func AdminMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		user, ok := GetUserFromContext(r.Context())
+		if !ok {
+			respondError(w, http.StatusUnauthorized, "authentication required")
+			return
+		}
+
+		// Check if user has admin or moderator role
+		if user.Role != models.RoleAdmin && user.Role != models.RoleModerator {
+			respondError(w, http.StatusForbidden, "insufficient permissions")
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
+
 // LoggingMiddleware logs HTTP requests
 func LoggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

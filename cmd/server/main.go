@@ -34,8 +34,15 @@ func main() {
 		log.Printf("Warning: Migration failed: %v", err)
 	}
 
+	// Run admin features migration
+	adminMigrationPath := "migrations/002_add_admin_features.sql"
+	if err := db.Migrate(adminMigrationPath); err != nil {
+		log.Printf("Warning: Admin migration failed: %v", err)
+	}
+
 	// Initialize handlers
 	h := handlers.New(db)
+	adminH := handlers.NewAdminHandler(db)
 
 	// Create router
 	mux := http.NewServeMux()
@@ -51,6 +58,19 @@ func main() {
 	mux.Handle("/api/upload", authMiddleware(http.HandlerFunc(h.UploadHandler)))
 	mux.Handle("/api/vote", authMiddleware(http.HandlerFunc(h.VoteHandler)))
 	mux.Handle("/api/vote/delete", authMiddleware(http.HandlerFunc(h.DeleteVoteHandler)))
+
+	// Admin API routes (require authentication + admin role)
+	adminMiddleware := func(handler http.HandlerFunc) http.Handler {
+		return authMiddleware(handlers.AdminMiddleware(http.HandlerFunc(handler)))
+	}
+	mux.Handle("/api/admin/submissions", adminMiddleware(adminH.ListSubmissionsHandler))
+	mux.Handle("/api/admin/submissions/get", adminMiddleware(adminH.GetSubmissionHandler))
+	mux.Handle("/api/admin/submissions/delete", adminMiddleware(adminH.DeleteSubmissionHandler))
+	mux.Handle("/api/admin/users", adminMiddleware(adminH.ListUsersHandler))
+	mux.Handle("/api/admin/users/get", adminMiddleware(adminH.GetUserHandler))
+	mux.Handle("/api/admin/users/role", adminMiddleware(adminH.ChangeUserRoleHandler))
+	mux.Handle("/api/admin/users/status", adminMiddleware(adminH.ChangeUserStatusHandler))
+	mux.Handle("/api/admin/stats", adminMiddleware(adminH.GetStatsHandler))
 
 	// Serve static frontend files
 	frontendPath := os.Getenv("FRONTEND_PATH")
