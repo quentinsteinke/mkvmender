@@ -6,6 +6,9 @@ let apiKey = localStorage.getItem('mkvmender_api_key') || '';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    // Set up OS-specific download button
+    setupDownloadButton();
+
     if (apiKey) {
         showSearchSection();
     } else {
@@ -18,6 +21,61 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('login-btn').addEventListener('click', showLoginSection);
     document.getElementById('logout-btn').addEventListener('click', handleLogout);
 });
+
+// Detect OS and set download button
+function setupDownloadButton() {
+    const downloadBtn = document.getElementById('download-btn');
+    const downloadText = document.getElementById('download-text');
+    const userAgent = navigator.userAgent.toLowerCase();
+    const platform = navigator.platform.toLowerCase();
+
+    let os = 'unknown';
+    let downloadUrl = '';
+    let label = 'Download';
+
+    // Detect OS
+    if (platform.includes('mac') || userAgent.includes('mac')) {
+        // Detect Apple Silicon vs Intel
+        const isAppleSilicon = userAgent.includes('arm') || platform.includes('arm');
+        if (isAppleSilicon) {
+            os = 'mac-arm';
+            downloadUrl = 'https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-darwin-arm64';
+            label = 'Download for macOS (Apple Silicon)';
+        } else {
+            os = 'mac-intel';
+            downloadUrl = 'https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-darwin-amd64';
+            label = 'Download for macOS (Intel)';
+        }
+    } else if (platform.includes('win') || userAgent.includes('win')) {
+        os = 'windows';
+        downloadUrl = 'https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-windows-amd64.exe';
+        label = 'Download for Windows';
+    } else if (platform.includes('linux') || userAgent.includes('linux')) {
+        // Detect ARM vs x86_64
+        const isArm = userAgent.includes('arm') || platform.includes('arm') || userAgent.includes('aarch64');
+        if (isArm) {
+            os = 'linux-arm';
+            downloadUrl = 'https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-linux-arm64';
+            label = 'Download for Linux (ARM64)';
+        } else {
+            os = 'linux-x86';
+            downloadUrl = 'https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-linux-amd64';
+            label = 'Download for Linux (x86_64)';
+        }
+    }
+
+    // Set button properties
+    if (downloadUrl) {
+        downloadBtn.href = downloadUrl;
+        downloadText.textContent = label;
+    } else {
+        // Fallback to releases page if OS not detected
+        downloadBtn.href = 'https://github.com/quentinsteinke/mkvmender/releases';
+        downloadText.textContent = 'Download';
+        downloadBtn.removeAttribute('download');
+        downloadBtn.target = '_blank';
+    }
+}
 
 // Navigation
 function showLoginSection() {
