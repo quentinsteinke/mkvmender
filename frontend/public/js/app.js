@@ -76,17 +76,17 @@ function setupDownloadButton() {
 
 // Navigation
 function showLoginSection() {
-    document.getElementById('login-section').style.display = 'block';
-    document.getElementById('search-section').style.display = 'none';
-    document.getElementById('login-btn').style.display = 'none';
-    document.getElementById('logout-btn').style.display = 'none';
+    document.getElementById('login-section').classList.remove('hidden');
+    document.getElementById('search-section').classList.add('hidden');
+    document.getElementById('login-btn').classList.remove('hidden');
+    document.getElementById('logout-btn').classList.add('hidden');
 }
 
 function showSearchSection() {
-    document.getElementById('login-section').style.display = 'none';
-    document.getElementById('search-section').style.display = 'block';
-    document.getElementById('login-btn').style.display = 'none';
-    document.getElementById('logout-btn').style.display = 'inline-block';
+    document.getElementById('login-section').classList.add('hidden');
+    document.getElementById('search-section').classList.remove('hidden');
+    document.getElementById('login-btn').classList.add('hidden');
+    document.getElementById('logout-btn').classList.remove('hidden');
 }
 
 // Login
@@ -107,14 +107,14 @@ async function handleLogin(e) {
         if (response.ok) {
             apiKey = key;
             localStorage.setItem('mkvmender_api_key', key);
-            errorDiv.style.display = 'none';
+            errorDiv.classList.add('hidden');
             showSearchSection();
         } else {
             throw new Error('Invalid API key');
         }
     } catch (error) {
         errorDiv.textContent = 'Login failed. Please check your API key.';
-        errorDiv.style.display = 'block';
+        errorDiv.classList.remove('hidden');
     }
 }
 
@@ -123,7 +123,7 @@ function handleLogout() {
     apiKey = '';
     localStorage.removeItem('mkvmender_api_key');
     document.getElementById('api-key').value = '';
-    document.getElementById('results-container').style.display = 'none';
+    document.getElementById('results-container').classList.add('hidden');
     showLoginSection();
 }
 
@@ -152,10 +152,10 @@ async function handleSearch(e) {
 
         const data = await response.json();
         displayResults(data);
-        errorDiv.style.display = 'none';
+        errorDiv.classList.add('hidden');
     } catch (error) {
         errorDiv.textContent = 'Search failed. Please try again.';
-        errorDiv.style.display = 'block';
+        errorDiv.classList.remove('hidden');
     }
 }
 
@@ -167,8 +167,8 @@ function displayResults(data) {
 
     if (!data.results || data.results.length === 0) {
         resultsTitle.textContent = 'No results found';
-        resultsList.innerHTML = '<p style="color: var(--text-secondary);">Try a different search term or enable fuzzy matching.</p>';
-        resultsContainer.style.display = 'block';
+        resultsList.innerHTML = '<p class="text-text-secondary">Try a different search term or enable fuzzy matching.</p>';
+        resultsContainer.classList.remove('hidden');
         return;
     }
 
@@ -182,37 +182,39 @@ function displayResults(data) {
         const year = group.year ? ` (${group.year})` : '';
 
         return `
-            <div class="result-item">
-                <div class="result-header">
-                    <span class="result-icon">${icon}</span>
-                    <span class="result-title">${escapeHtml(group.title)}${year}</span>
-                    <span class="result-year">${group.media_type}</span>
+            <div class="card card-hover animate-fade-in">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="text-3xl">${icon}</span>
+                    <div class="flex-1">
+                        <h4 class="text-xl font-bold">${escapeHtml(group.title)}${year}</h4>
+                        <span class="text-sm text-text-secondary uppercase">${group.media_type}</span>
+                    </div>
                 </div>
 
-                <div class="result-meta">
-                    <span>📦 ${formatFileSize(group.file_size)}</span>
-                    <span>🔢 ${group.submissions.length} submission(s)</span>
+                <div class="flex flex-wrap gap-4 text-sm text-text-secondary mb-4">
+                    <span class="flex items-center gap-1">📦 ${formatFileSize(group.file_size)}</span>
+                    <span class="flex items-center gap-1">🔢 ${group.submissions.length} submission(s)</span>
                     ${group.season ? `<span>Season ${group.season}</span>` : ''}
                     ${group.episode ? `<span>Episode ${group.episode}</span>` : ''}
                 </div>
 
-                <div class="submissions">
+                <div class="space-y-3 pl-4">
                     ${group.submissions.map(sub => `
-                        <div class="submission-item">
-                            <div class="submission-header">
-                                <div class="submission-filename">${escapeHtml(sub.filename)}</div>
-                                <div class="vote-buttons">
-                                    <button class="vote-btn upvote" data-submission-id="${sub.id}" data-vote-type="1">
-                                        👍 <span class="vote-count">${sub.upvotes}</span>
+                        <div class="bg-bg-tertiary p-4 rounded-lg border border-transparent hover:border-border transition-all">
+                            <div class="flex flex-col md:flex-row md:items-start gap-3 mb-3">
+                                <div class="flex-1 font-mono text-sm text-primary break-words">${escapeHtml(sub.filename)}</div>
+                                <div class="flex gap-2 flex-shrink-0">
+                                    <button class="vote-btn upvote px-3 py-2 bg-transparent border border-border rounded-lg hover:border-success hover:bg-success-bg hover:text-success transition-all text-sm flex items-center gap-2" data-submission-id="${sub.id}" data-vote-type="1">
+                                        👍 <span class="vote-count font-semibold">${sub.upvotes}</span>
                                     </button>
-                                    <button class="vote-btn downvote" data-submission-id="${sub.id}" data-vote-type="-1">
-                                        👎 <span class="vote-count">${sub.downvotes}</span>
+                                    <button class="vote-btn downvote px-3 py-2 bg-transparent border border-border rounded-lg hover:border-error hover:bg-error-bg hover:text-error transition-all text-sm flex items-center gap-2" data-submission-id="${sub.id}" data-vote-type="-1">
+                                        👎 <span class="vote-count font-semibold">${sub.downvotes}</span>
                                     </button>
                                 </div>
                             </div>
-                            <div class="submission-meta">
+                            <div class="flex gap-4 text-sm text-text-secondary">
                                 <span>👤 ${escapeHtml(sub.username)}</span>
-                                <span class="vote-score">Score: ${sub.vote_score}</span>
+                                <span class="vote-score font-semibold">Score: ${sub.vote_score}</span>
                             </div>
                         </div>
                     `).join('')}
@@ -221,7 +223,7 @@ function displayResults(data) {
         `;
     }).join('');
 
-    resultsContainer.style.display = 'block';
+    resultsContainer.classList.remove('hidden');
 
     // Attach vote button event listeners
     attachVoteListeners();
@@ -300,10 +302,12 @@ async function handleVote(submissionId, voteType, button) {
 // Show vote feedback message
 function showVoteFeedback(element, message, type) {
     const feedback = document.createElement('div');
-    feedback.className = type === 'success' ? 'success' : 'error';
+    if (type === 'success') {
+        feedback.className = 'mt-2 px-3 py-2 bg-success-bg border border-success text-success rounded-lg text-sm';
+    } else {
+        feedback.className = 'mt-2 px-3 py-2 bg-error-bg border border-error text-error rounded-lg text-sm';
+    }
     feedback.textContent = message;
-    feedback.style.marginTop = '0.5rem';
-    feedback.style.fontSize = '0.85rem';
 
     element.appendChild(feedback);
 

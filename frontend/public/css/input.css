@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/* Theme configuration for Tailwind v4 */
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Courier New', monospace;
+
+  /* Color palette - GitHub dark inspired with modern accents */
+  --color-primary: #58a6ff;
+  --color-primary-dark: #1f6feb;
+  --color-primary-hover: #79c0ff;
+  --color-bg: #0d1117;
+  --color-bg-secondary: #161b22;
+  --color-bg-tertiary: #21262d;
+  --color-bg-hover: #30363d;
+  --color-text: #e6edf3;
+  --color-text-secondary: #8d96a0;
+  --color-text-muted: #6e7681;
+  --color-border: #30363d;
+  --color-border-hover: #58a6ff;
+  --color-success: #3fb950;
+  --color-success-bg: rgba(63, 185, 80, 0.15);
+  --color-error: #f85149;
+  --color-error-bg: rgba(248, 81, 73, 0.15);
+
+  /* Modern gradient colors */
+  --color-gradient-start: #58a6ff;
+  --color-gradient-end: #a371f7;
+}
+
+/* Base styles */
+@layer base {
+  body {
+    @apply bg-bg text-text antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-text font-bold;
+  }
+}
+
+/* Component styles inspired by shadcn/ui */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-bg hover:bg-primary-dark;
+    @apply shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border border-primary text-primary;
+    @apply hover:bg-primary hover:text-bg;
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-lg;
+  }
+
+  .btn-md {
+    @apply px-6 py-3 text-base;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-sm;
+  }
+
+  .card {
+    @apply bg-bg-secondary border border-border rounded-xl p-6;
+    @apply transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:border-border-hover hover:shadow-xl hover:shadow-black/20;
+    @apply hover:-translate-y-1;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-gradient-start to-gradient-end;
+    @apply bg-clip-text text-transparent;
+  }
+
+  .input {
+    @apply w-full px-4 py-3 bg-bg-tertiary border border-border rounded-lg;
+    @apply text-text placeholder-text-muted;
+    @apply focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20;
+    @apply transition-all duration-200;
+  }
+
+  .terminal {
+    @apply bg-bg-tertiary rounded-lg p-6 font-mono text-sm;
+    @apply border border-border shadow-xl;
+    @apply h-64 overflow-y-auto;
+  }
+
+  .code-block {
+    @apply bg-bg-tertiary rounded-lg p-4 font-mono text-sm text-primary;
+    @apply border border-border;
+  }
+}
+
+/* Animation utilities */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .animate-typing {
+    overflow: hidden;
+    border-right: 2px solid var(--color-primary);
+    white-space: nowrap;
+    animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes blink {
+    from, to {
+      border-color: transparent;
+    }
+    50% {
+      border-color: var(--color-primary);
+    }
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

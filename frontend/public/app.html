@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MKV Mender - Community File Naming</title>
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-bg/80 backdrop-blur-lg border-b border-border">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <span class="text-3xl">🎬</span>
+                    <span class="text-2xl font-bold gradient-text">MKV Mender</span>
+                </a>
+
+                <div class="flex items-center gap-4">
+                    <a id="download-btn" href="#" class="hidden sm:inline-flex btn btn-secondary btn-sm" download>
+                        <span id="download-text">Download</span>
+                    </a>
+                    <a href="https://github.com/quentinsteinke/mkvmender/releases" class="hidden sm:inline-block text-text-secondary hover:text-text transition-colors text-sm" target="_blank">All platforms</a>
+                    <button id="login-btn" class="btn btn-secondary btn-sm">Login</button>
+                    <button id="logout-btn" class="btn btn-secondary btn-sm hidden">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-8">
+        <!-- Login Section -->
+        <section id="login-section" class="max-w-2xl mx-auto">
+            <div class="card animate-fade-in">
+                <h2 class="text-3xl font-bold mb-4">Login</h2>
+                <p class="text-text-secondary mb-4">Enter your API key to get started. Don't have one? Register using the CLI tool:</p>
+                <div class="code-block mb-6">mkvmender register</div>
+
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label for="api-key" class="block text-sm font-medium mb-2">API Key</label>
+                        <input type="password" id="api-key" class="input" placeholder="Enter your API key" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-md w-full">Login</button>
+                </form>
+                <div id="login-error" class="hidden mt-4 bg-error-bg border border-error text-error px-4 py-3 rounded-lg"></div>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section id="search-section" class="hidden">
+            <div class="card mb-8 animate-fade-in">
+                <h2 class="text-3xl font-bold mb-4">Search Database</h2>
+                <p class="text-text-secondary mb-6">Search for movies and TV shows in the community database</p>
+
+                <form id="search-form" class="space-y-6">
+                    <div>
+                        <input type="text" id="search-query" class="input" placeholder="Search for a title..." required>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <label class="flex items-center gap-2 text-text-secondary">
+                            <input type="checkbox" id="fuzzy-search" checked class="w-4 h-4 rounded border-border bg-bg-tertiary text-primary focus:ring-2 focus:ring-primary">
+                            <span>Fuzzy matching (tolerates typos)</span>
+                        </label>
+                        <select id="sort-by" class="input sm:w-auto">
+                            <option value="relevance">Sort by: Relevance</option>
+                            <option value="votes">Sort by: Votes</option>
+                            <option value="date">Sort by: Date</option>
+                            <option value="title">Sort by: Title</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-md">Search</button>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-container" class="hidden">
+                <h3 id="results-title" class="text-2xl font-bold mb-6"></h3>
+                <div id="results-list" class="space-y-6"></div>
+            </div>
+
+            <div id="search-error" class="hidden mt-4 bg-error-bg border border-error text-error px-4 py-3 rounded-lg"></div>
+        </section>
+    </main>
+
+    <footer class="border-t border-border py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-center text-text-secondary">
+                MKV Mender - Open Source •
+                <a href="https://github.com/quentinsteinke/mkvmender" target="_blank" class="text-primary hover:underline">GitHub</a> •
+                <a href="/" class="text-primary hover:underline">Back to Home</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
