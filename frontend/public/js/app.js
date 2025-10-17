@@ -83,34 +83,32 @@ function setupDownloadButton() {
 async function verifyAndShowApp() {
     try {
         // Fetch user data to verify API key and get role
-        const response = await fetch(`${API_BASE_URL}/health`, {
+        const response = await fetch(`${API_BASE_URL}/verify`, {
             headers: {
                 'Authorization': `Bearer ${apiKey}`
             }
         });
 
         if (response.ok) {
-            // Try to get user data from search endpoint to determine role
-            // We'll make a simple search to see if we can access admin endpoints
-            const adminCheck = await fetch(`${API_BASE_URL}/admin/stats`, {
-                headers: {
-                    'Authorization': `Bearer ${apiKey}`
-                }
-            });
+            const userData = await response.json();
 
-            if (adminCheck.ok) {
-                isAdmin = true;
-                userRole = 'admin'; // or moderator
-                localStorage.setItem('mkvmender_user_role', userRole);
+            // Check if user is active
+            if (!userData.is_active) {
+                alert('Your account has been suspended. Please contact support.');
+                handleLogout();
+                return;
+            }
 
-                // Initialize admin panel
-                if (typeof initAdminPanel === 'function') {
-                    initAdminPanel(apiKey);
-                }
-            } else {
-                isAdmin = false;
-                userRole = 'user';
-                localStorage.setItem('mkvmender_user_role', 'user');
+            // Set user role
+            userRole = userData.role;
+            localStorage.setItem('mkvmender_user_role', userRole);
+
+            // Check if user is admin or moderator
+            isAdmin = userRole === 'admin' || userRole === 'moderator';
+
+            // Initialize admin panel if user is admin
+            if (isAdmin && typeof initAdminPanel === 'function') {
+                initAdminPanel(apiKey);
             }
 
             showSearchSection();
@@ -166,9 +164,9 @@ async function handleLogin(e) {
     const key = document.getElementById('api-key').value;
     const errorDiv = document.getElementById('login-error');
 
-    // Test the API key by hitting the health endpoint with auth
+    // Test the API key by hitting the verify endpoint
     try {
-        const response = await fetch(`${API_BASE_URL}/health`, {
+        const response = await fetch(`${API_BASE_URL}/verify`, {
             headers: {
                 'Authorization': `Bearer ${key}`
             }

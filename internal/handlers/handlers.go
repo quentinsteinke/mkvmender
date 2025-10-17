@@ -315,3 +315,28 @@ func (h *Handler) SearchHandler(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) HealthHandler(w http.ResponseWriter, r *http.Request) {
 	respondJSON(w, http.StatusOK, map[string]string{"status": "ok"})
 }
+
+// VerifyHandler handles API key verification and returns user info
+func (h *Handler) VerifyHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		respondError(w, http.StatusMethodNotAllowed, "method not allowed")
+		return
+	}
+
+	// Get authenticated user
+	user, ok := GetUserFromContext(r.Context())
+	if !ok {
+		respondError(w, http.StatusUnauthorized, "authentication required")
+		return
+	}
+
+	// Return user info (without API key)
+	response := map[string]interface{}{
+		"id":       user.ID,
+		"username": user.Username,
+		"role":     user.Role,
+		"is_active": user.IsActive,
+	}
+
+	respondJSON(w, http.StatusOK, response)
+}

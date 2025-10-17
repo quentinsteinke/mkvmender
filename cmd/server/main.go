@@ -55,6 +55,7 @@ func main() {
 
 	// Protected API routes (require authentication)
 	authMiddleware := handlers.AuthMiddleware(db)
+	mux.Handle("/api/verify", authMiddleware(http.HandlerFunc(h.VerifyHandler)))
 	mux.Handle("/api/upload", authMiddleware(http.HandlerFunc(h.UploadHandler)))
 	mux.Handle("/api/vote", authMiddleware(http.HandlerFunc(h.VoteHandler)))
 	mux.Handle("/api/vote/delete", authMiddleware(http.HandlerFunc(h.DeleteVoteHandler)))
