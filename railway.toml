@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "mkdir -p bin && go build -o bin/mkvmender-server ./cmd/server"
+buildCommand = "mkdir -p bin && go build -o bin/mkvmender-server ./cmd/server && cd frontend && npm install && npm run build:css && cd .."
 
 [deploy]
 startCommand = "./bin/mkvmender-server"
@@ -9,3 +9,4 @@ restartPolicyMaxRetries = 10
 
 # Frontend files are included in the deployment
 # Server will serve them from frontend/public/
+# Tailwind CSS is built during deployment

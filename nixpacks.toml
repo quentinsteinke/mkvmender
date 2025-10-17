@@ -1,11 +1,12 @@
 [phases.setup]
-nixPkgs = ["go_1_22"]
+nixPkgs = ["go_1_22", "nodejs_20"]
 
 [phases.build]
 cmds = [
   "mkdir -p bin",
   "go mod download",
-  "go build -o bin/mkvmender-server ./cmd/server"
+  "go build -o bin/mkvmender-server ./cmd/server",
+  "cd frontend && npm install && npm run build:css && cd .."
 ]
 
 [start]
