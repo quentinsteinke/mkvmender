@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_users_api_key ON users(api_key);
+CREATE INDEX IF NOT EXISTS idx_users_api_key ON users(api_key);
 
 -- File hashes table
 CREATE TABLE IF NOT EXISTS file_hashes (
@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS file_hashes (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_file_hashes_hash ON file_hashes(hash);
-CREATE INDEX idx_file_hashes_media_type ON file_hashes(media_type);
+CREATE INDEX IF NOT EXISTS idx_file_hashes_hash ON file_hashes(hash);
+CREATE INDEX IF NOT EXISTS idx_file_hashes_media_type ON file_hashes(media_type);
 
 -- Naming submissions table
 CREATE TABLE IF NOT EXISTS naming_submissions (
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS naming_submissions (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_naming_submissions_hash_id ON naming_submissions(hash_id);
-CREATE INDEX idx_naming_submissions_user_id ON naming_submissions(user_id);
+CREATE INDEX IF NOT EXISTS idx_naming_submissions_hash_id ON naming_submissions(hash_id);
+CREATE INDEX IF NOT EXISTS idx_naming_submissions_user_id ON naming_submissions(user_id);
 
 -- Votes table
 CREATE TABLE IF NOT EXISTS votes (
@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS votes (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_votes_submission_id ON votes(submission_id);
-CREATE INDEX idx_votes_user_id ON votes(user_id);
+CREATE INDEX IF NOT EXISTS idx_votes_submission_id ON votes(submission_id);
+CREATE INDEX IF NOT EXISTS idx_votes_user_id ON votes(user_id);
 
 -- Naming metadata table for additional information
 CREATE TABLE IF NOT EXISTS naming_metadata (
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS naming_metadata (
     FOREIGN KEY (submission_id) REFERENCES naming_submissions(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_naming_metadata_submission_id ON naming_metadata(submission_id);
+CREATE INDEX IF NOT EXISTS idx_naming_metadata_submission_id ON naming_metadata(submission_id);
 
 -- View for submissions with vote counts
 CREATE VIEW IF NOT EXISTS submissions_with_votes AS
