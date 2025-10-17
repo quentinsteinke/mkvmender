@@ -1,0 +1,16 @@
+{
+  "name": "mkvmender-frontend",
+  "version": "1.0.0",
+  "description": "MKV Mender Web Frontend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["mkvmender", "frontend"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

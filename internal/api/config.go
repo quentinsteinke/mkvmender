@@ -17,7 +17,7 @@ type Config struct {
 // DefaultConfig returns default configuration
 func DefaultConfig() *Config {
 	return &Config{
-		BaseURL: "http://localhost:8080",
+		BaseURL: "https://mkvmender.org",
 	}
 }
 

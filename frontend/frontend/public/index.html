@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MKV Mender - Community File Naming</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🎬 MKV Mender</h1>
+            <p class="tagline">Community-driven file naming</p>
+            <nav id="main-nav">
+                <button id="login-btn" class="nav-btn">Login</button>
+                <button id="logout-btn" class="nav-btn" style="display:none;">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Login Section -->
+        <section id="login-section" class="section">
+            <div class="card">
+                <h2>Login</h2>
+                <p>Enter your API key to get started. Don't have one? Register using the CLI tool:</p>
+                <code class="cli-example">mkvmender register</code>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="api-key">API Key</label>
+                        <input type="password" id="api-key" placeholder="Enter your API key" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <div id="login-error" class="error" style="display:none;"></div>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section id="search-section" class="section" style="display:none;">
+            <div class="card">
+                <h2>Search Database</h2>
+                <p>Search for movies and TV shows in the community database</p>
+                
+                <form id="search-form">
+                    <div class="form-group">
+                        <input type="text" id="search-query" placeholder="Search for a title..." required>
+                    </div>
+                    <div class="search-options">
+                        <label>
+                            <input type="checkbox" id="fuzzy-search" checked>
+                            Fuzzy matching (tolerates typos)
+                        </label>
+                        <select id="sort-by">
+                            <option value="relevance">Sort by: Relevance</option>
+                            <option value="votes">Sort by: Votes</option>
+                            <option value="date">Sort by: Date</option>
+                            <option value="title">Sort by: Title</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-container" style="display:none;">
+                <h3 id="results-title"></h3>
+                <div id="results-list"></div>
+            </div>
+
+            <div id="search-error" class="error" style="display:none;"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>MKV Mender - Open Source • <a href="https://github.com/quentinsteinke/mkvmender" target="_blank">GitHub</a></p>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
