@@ -18,11 +18,11 @@ BINARY_NAME="mkvmender"
 
 # Helper functions
 info() {
-    printf "${BLUE}==>${NC} %s\n" "$1"
+    printf "${BLUE}==>${NC} %s\n" "$1" >&2
 }
 
 success() {
-    printf "${GREEN}✓${NC} %s\n" "$1"
+    printf "${GREEN}✓${NC} %s\n" "$1" >&2
 }
 
 error() {
@@ -31,7 +31,7 @@ error() {
 }
 
 warn() {
-    printf "${YELLOW}!${NC} %s\n" "$1"
+    printf "${YELLOW}!${NC} %s\n" "$1" >&2
 }
 
 # Detect OS
@@ -131,7 +131,7 @@ check_path() {
     if ! echo "$PATH" | grep -q "$dir"; then
         warn "$dir is not in your PATH"
         info "Add it to your PATH by adding this to your shell profile (~/.bashrc, ~/.zshrc, etc.):"
-        printf "\n    export PATH=\"\$PATH:%s\"\n\n" "$dir"
+        printf "\n    export PATH=\"\$PATH:%s\"\n\n" "$dir" >&2
         info "Then reload your shell with: source ~/.bashrc (or ~/.zshrc)"
     fi
 }
@@ -163,11 +163,11 @@ main() {
     success "MKV Mender installed successfully!"
     echo ""
     info "Get started with:"
-    printf "    %s register\n" "$BINARY_NAME"
+    printf "    %s register\n" "$BINARY_NAME" >&2
     echo ""
     info "For more information:"
-    printf "    %s --help\n" "$BINARY_NAME"
-    printf "    https://github.com/%s\n" "$GITHUB_REPO"
+    printf "    %s --help\n" "$BINARY_NAME" >&2
+    printf "    https://github.com/%s\n" "$GITHUB_REPO" >&2
     echo ""
 }
 
