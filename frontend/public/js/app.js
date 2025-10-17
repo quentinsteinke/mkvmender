@@ -35,17 +35,14 @@ function setupDownloadButton() {
 
     // Detect OS
     if (platform.includes('mac') || userAgent.includes('mac')) {
-        // Detect Apple Silicon vs Intel
-        const isAppleSilicon = userAgent.includes('arm') || platform.includes('arm');
-        if (isAppleSilicon) {
-            os = 'mac-arm';
-            downloadUrl = 'https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-darwin-arm64';
-            label = 'Download for macOS (Apple Silicon)';
-        } else {
-            os = 'mac-intel';
-            downloadUrl = 'https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-darwin-amd64';
-            label = 'Download for macOS (Intel)';
-        }
+        // macOS detection is tricky because browsers report "MacIntel" even on Apple Silicon
+        // We'll default to Apple Silicon (ARM64) since:
+        // 1. Most Macs sold since 2020 are Apple Silicon
+        // 2. Users can click "All platforms" if they need Intel version
+
+        os = 'mac-arm';
+        downloadUrl = 'https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-darwin-arm64';
+        label = 'Download for macOS';
     } else if (platform.includes('win') || userAgent.includes('win')) {
         os = 'windows';
         downloadUrl = 'https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-windows-amd64.exe';
