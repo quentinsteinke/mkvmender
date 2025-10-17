@@ -3,6 +3,8 @@ const API_BASE_URL = window.location.origin + '/api';
 
 // State
 let apiKey = localStorage.getItem('mkvmender_api_key') || '';
+let userRole = localStorage.getItem('mkvmender_user_role') || 'user';
+let isAdmin = userRole === 'admin' || userRole === 'moderator';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupDownloadButton();
 
     if (apiKey) {
-        showSearchSection();
+        // Verify API key and fetch user data
+        verifyAndShowApp();
     } else {
         showLoginSection();
     }
@@ -20,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('search-form').addEventListener('submit', handleSearch);
     document.getElementById('login-btn').addEventListener('click', showLoginSection);
     document.getElementById('logout-btn').addEventListener('click', handleLogout);
+    document.getElementById('admin-panel-btn').addEventListener('click', showAdminSection);
+    document.getElementById('search-panel-btn').addEventListener('click', showSearchSection);
 });
 
 // Detect OS and set download button
@@ -74,19 +79,84 @@ function setupDownloadButton() {
     }
 }
 
+// Verify API key and show appropriate section
+async function verifyAndShowApp() {
+    try {
+        // Fetch user data to verify API key and get role
+        const response = await fetch(`${API_BASE_URL}/health`, {
+            headers: {
+                'Authorization': `Bearer ${apiKey}`
+            }
+        });
+
+        if (response.ok) {
+            // Try to get user data from search endpoint to determine role
+            // We'll make a simple search to see if we can access admin endpoints
+            const adminCheck = await fetch(`${API_BASE_URL}/admin/stats`, {
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`
+                }
+            });
+
+            if (adminCheck.ok) {
+                isAdmin = true;
+                userRole = 'admin'; // or moderator
+                localStorage.setItem('mkvmender_user_role', userRole);
+
+                // Initialize admin panel
+                if (typeof initAdminPanel === 'function') {
+                    initAdminPanel(apiKey);
+                }
+            } else {
+                isAdmin = false;
+                userRole = 'user';
+                localStorage.setItem('mkvmender_user_role', 'user');
+            }
+
+            showSearchSection();
+        } else {
+            // Invalid API key, show login
+            handleLogout();
+        }
+    } catch (error) {
+        console.error('Error verifying API key:', error);
+        handleLogout();
+    }
+}
+
 // Navigation
 function showLoginSection() {
     document.getElementById('login-section').classList.remove('hidden');
     document.getElementById('search-section').classList.add('hidden');
+    document.getElementById('admin-section').classList.add('hidden');
     document.getElementById('login-btn').classList.remove('hidden');
     document.getElementById('logout-btn').classList.add('hidden');
+    document.getElementById('admin-panel-btn').classList.add('hidden');
+    document.getElementById('search-panel-btn').classList.add('hidden');
 }
 
 function showSearchSection() {
     document.getElementById('login-section').classList.add('hidden');
     document.getElementById('search-section').classList.remove('hidden');
+    document.getElementById('admin-section').classList.add('hidden');
     document.getElementById('login-btn').classList.add('hidden');
     document.getElementById('logout-btn').classList.remove('hidden');
+
+    // Show admin panel button if user is admin
+    if (isAdmin) {
+        document.getElementById('admin-panel-btn').classList.remove('hidden');
+        document.getElementById('search-panel-btn').classList.add('hidden');
+    }
+}
+
+function showAdminSection() {
+    document.getElementById('login-section').classList.add('hidden');
+    document.getElementById('search-section').classList.add('hidden');
+    document.getElementById('admin-section').classList.remove('hidden');
+    document.getElementById('login-btn').classList.add('hidden');
+    document.getElementById('logout-btn').classList.remove('hidden');
+    document.getElementById('admin-panel-btn').classList.add('hidden');
+    document.getElementById('search-panel-btn').classList.remove('hidden');
 }
 
 // Login
@@ -108,7 +178,7 @@ async function handleLogin(e) {
             apiKey = key;
             localStorage.setItem('mkvmender_api_key', key);
             errorDiv.classList.add('hidden');
-            showSearchSection();
+            await verifyAndShowApp();
         } else {
             throw new Error('Invalid API key');
         }
@@ -121,7 +191,10 @@ async function handleLogin(e) {
 // Logout
 function handleLogout() {
     apiKey = '';
+    userRole = 'user';
+    isAdmin = false;
     localStorage.removeItem('mkvmender_api_key');
+    localStorage.removeItem('mkvmender_user_role');
     document.getElementById('api-key').value = '';
     document.getElementById('results-container').classList.add('hidden');
     showLoginSection();
