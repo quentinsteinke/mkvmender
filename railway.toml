@@ -6,3 +6,6 @@ buildCommand = "mkdir -p bin && go build -o bin/mkvmender-server ./cmd/server"
 startCommand = "./bin/mkvmender-server"
 restartPolicyType = "always"
 restartPolicyMaxRetries = 10
+
+# Frontend files are included in the deployment
+# Server will serve them from frontend/public/

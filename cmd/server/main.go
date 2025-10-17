@@ -40,17 +40,37 @@ func main() {
 	// Create router
 	mux := http.NewServeMux()
 
-	// Public routes
+	// API routes
 	mux.HandleFunc("/api/health", h.HealthHandler)
 	mux.HandleFunc("/api/register", h.RegisterHandler)
 	mux.HandleFunc("/api/lookup", h.LookupHandler)
 	mux.HandleFunc("/api/search", h.SearchHandler)
 
-	// Protected routes (require authentication)
+	// Protected API routes (require authentication)
 	authMiddleware := handlers.AuthMiddleware(db)
 	mux.Handle("/api/upload", authMiddleware(http.HandlerFunc(h.UploadHandler)))
 	mux.Handle("/api/vote", authMiddleware(http.HandlerFunc(h.VoteHandler)))
 	mux.Handle("/api/vote/delete", authMiddleware(http.HandlerFunc(h.DeleteVoteHandler)))
+
+	// Serve static frontend files
+	frontendPath := os.Getenv("FRONTEND_PATH")
+	if frontendPath == "" {
+		frontendPath = "frontend/public"
+	}
+
+	// Check if frontend directory exists
+	if _, err := os.Stat(frontendPath); err == nil {
+		log.Printf("Serving frontend from: %s", frontendPath)
+		fs := http.FileServer(http.Dir(frontendPath))
+		mux.Handle("/", fs)
+	} else {
+		log.Printf("Frontend not found at %s, serving API only", frontendPath)
+		mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`{"message":"MKV Mender API","endpoints":["/api/health","/api/register","/api/lookup","/api/search","/api/upload","/api/vote"]}`))
+		})
+	}
 
 	// Apply global middleware
 	handler := handlers.LoggingMiddleware(handlers.CORSMiddleware(mux))
