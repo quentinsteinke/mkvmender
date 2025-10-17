@@ -1,218 +1,206 @@
-# MKV Mender
+# 🎬 MKV Mender
 
-A community-driven CLI tool for renaming movie and TV show rips from Blu-ray and DVDs. MKV Mender uses file hashing to match your files with naming data submitted by other users, making it easy to maintain a clean media library.
+**Stop manually renaming your media files. Let the community do it for you.**
 
-## Features
+MKV Mender is a community-driven tool that automatically names your movie and TV show files using crowd-sourced naming conventions. No more guessing—just hash your file and instantly see what everyone else is calling it.
 
-- **Hash-based matching**: Uses SHA-256 to uniquely identify files
-- **Community-driven**: Users can upload and vote on naming submissions
-- **Interactive CLI**: Easy-to-use command-line interface
-- **Batch processing**: Process entire directories at once
-- **Voting system**: Upvote/downvote naming submissions to surface the best options
-- **Metadata support**: Include title, year, season, episode, quality, and source information
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?logo=go)](https://go.dev/)
 
-## Architecture
+---
 
-- **CLI**: Go-based command-line tool
-- **API Server**: RESTful HTTP API
-- **Database**: Turso (distributed SQLite) for edge performance
+## 🤔 The Problem
 
-## Installation
+You've just ripped your entire Blu-ray collection. Now what?
 
-### Prerequisites
+```
+├── movie1.mkv
+├── movie2.mkv
+├── show_s01e01.mkv
+├── show_s01e02.mkv
+└── ...
+```
 
-- Go 1.24 or higher
-- Turso account (for running the server)
+Manually renaming hundreds of files is tedious. Different naming conventions make organization a nightmare. IMDB lookups by duration are unreliable. Filename parsing fails on edge cases.
 
-### Build from source
+## ✨ The Solution
+
+MKV Mender uses **file hashing** to uniquely identify your files, then matches them against a **community database** of naming submissions.
 
 ```bash
-# Clone the repository
+$ mkvmender lookup movie1.mkv
+
+Found 3 naming submissions:
+
+[1] The Matrix (1999) 1080p BluRay.mkv
+    👤 moviefan23  |  👍 156  👎 3
+
+[2] Matrix.1999.1080p.BluRay.x264-SPARKS.mkv
+    👤 encoder_pro  |  👍 89  👎 12
+
+[3] The.Matrix.1999.REMASTERED.1080p.BluRay.mkv
+    👤 quality_first  |  👍 45  👎 1
+```
+
+Pick your favorite, hit enter, and you're done.
+
+---
+
+## 🚀 Quick Start
+
+### Installation
+
+```bash
+# Clone and build
 git clone https://github.com/quentinsteinke/mkvmender.git
 cd mkvmender
+go build -o mkvmender ./cmd/cli
 
-# Install dependencies
-go mod tidy
-
-# Build CLI and server
-go build -o bin/mkvmender ./cmd/cli
-go build -o bin/mkvmender-server ./cmd/server
-
-# Optionally, install to your PATH
-cp bin/mkvmender /usr/local/bin/
+# Or use the Makefile
+make build
 ```
 
-## Usage
-
-### Server Setup
-
-1. Create a Turso database:
-```bash
-turso db create mkvmender
-turso db show mkvmender
-```
-
-2. Set environment variables:
-```bash
-export TURSO_DATABASE_URL="libsql://[your-database-url]"
-export TURSO_AUTH_TOKEN="[your-auth-token]"
-export PORT=8080
-```
-
-3. Run the server:
-```bash
-./bin/mkvmender-server
-```
-
-### CLI Usage
-
-#### Register a new account
+### Basic Usage
 
 ```bash
+# Register (one time)
 mkvmender register
-```
 
-This will create a new user account and provide you with an API key.
-
-#### Configure authentication
-
-```bash
-mkvmender login --api-key YOUR_API_KEY
-```
-
-Or set it interactively:
-```bash
-mkvmender login
-```
-
-#### Hash a file
-
-```bash
-mkvmender hash movie.mkv
-```
-
-#### Look up naming options
-
-```bash
+# Look up what the community calls your file
 mkvmender lookup movie.mkv
-```
 
-#### Rename a file interactively
-
-```bash
+# Rename it interactively
 mkvmender rename movie.mkv
+
+# Contribute your naming back to the community
+mkvmender upload movie.mkv --name "Your Preferred Name.mkv"
 ```
 
-#### Upload a naming submission
+---
 
-For a movie:
-```bash
-mkvmender upload movie.mkv \
-  --type movie \
-  --name "The Matrix (1999).mkv" \
-  --title "The Matrix" \
-  --year 1999 \
-  --quality 1080p \
-  --source Blu-ray
-```
+## ✨ Features
 
-For a TV show:
-```bash
-mkvmender upload episode.mkv \
-  --type tv \
-  --name "Breaking Bad - S01E01.mkv" \
-  --title "Breaking Bad" \
-  --season 1 \
-  --episode 1 \
-  --quality 1080p \
-  --source Blu-ray
-```
-
-#### Vote on submissions
+### 🔍 **Smart Search**
+Search for titles without having the file. Browse what's in the database before you rip.
 
 ```bash
-mkvmender vote movie.mkv
+$ mkvmender search "Breaking Bad"
+
+[1] 📺 Breaking Bad (2008)
+    → Season 1 (7 episodes)
+    → Season 2 (13 episodes)
+    → Season 3 (13 episodes)
 ```
 
-This opens an interactive menu where you can:
-1. See all naming submissions for the file
-2. Select which submission to vote on
-3. Choose to upvote or downvote
-4. See updated rankings immediately
+Supports **fuzzy matching** too—typos won't stop you:
+```bash
+$ mkvmender search "Breking Bad"  # Still finds "Breaking Bad"
+```
 
-#### Batch process a directory
+### 🗳️ **Community Voting**
+The best names rise to the top through community votes.
 
 ```bash
-mkvmender batch /path/to/movies
+$ mkvmender vote movie.mkv
+
+[1] The Matrix (1999) 1080p BluRay.mkv  ← 👍 156  👎 3
+[2] Matrix.1999.1080p.BluRay.x264.mkv   ← 👍 89   👎 12
+
+Select [1-2] to vote:
 ```
 
-## API Endpoints
-
-### Public Endpoints
-
-- `GET /api/health` - Health check
-- `POST /api/register` - Register new user
-- `GET /api/lookup?hash=<hash>` - Look up naming submissions
-
-### Protected Endpoints (require authentication)
-
-- `POST /api/upload` - Upload naming submission
-- `POST /api/vote` - Vote on submission
-- `DELETE /api/vote/delete?submission_id=<id>` - Remove vote
-
-## Database Schema
-
-- **users**: User accounts and API keys
-- **file_hashes**: Unique file hashes and metadata
-- **naming_submissions**: User-submitted file names
-- **votes**: User votes on submissions
-- **naming_metadata**: Extended metadata for submissions
-
-## Configuration
-
-CLI configuration is stored in `~/.mkvmender/config.yaml`:
-
-```yaml
-api_key: your-api-key-here
-base_url: http://localhost:8080
-```
-
-## Development
-
-### Project Structure
-
-```
-mkvmender/
-├── cmd/
-│   ├── cli/          # CLI application
-│   └── server/       # API server
-├── internal/
-│   ├── hasher/       # File hashing
-│   ├── api/          # API client
-│   ├── database/     # Database layer
-│   ├── models/       # Data models
-│   └── handlers/     # HTTP handlers
-├── migrations/       # Database migrations
-└── pkg/             # Public libraries
-```
-
-### Running Tests
+### 📦 **Batch Processing**
+Got hundreds of files? Process them all at once.
 
 ```bash
-go test ./...
+$ mkvmender batch /path/to/movies/
+
+Processing 47 files...
+✓ The Matrix (1999).mkv
+✓ The Matrix Reloaded (2003).mkv
+✓ The Matrix Revolutions (2003).mkv
+...
 ```
 
-## Contributing
+### 🎯 **Hash-Based Matching**
+Files are identified by SHA-256 hash—not filename, not duration, not file size. If the content matches, you'll get results.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### 📺 **TV Show Navigation**
+Browse shows by season and episode:
+```
+Breaking Bad (2008)
+  └─ Season 1
+      ├─ Episode 1: Pilot
+      ├─ Episode 2: Cat's in the Bag...
+      └─ ...
+```
 
-## License
+### 🏷️ **Rich Metadata**
+Store and display quality info, source (Blu-ray/DVD), release group, and more.
 
-MIT License - See LICENSE file for details
+---
 
-## Acknowledgments
+## 🎯 Use Cases
+
+- **Media Hoarders**: Organize your massive movie/TV collection
+- **Plex/Jellyfin Users**: Get Plex-friendly naming instantly
+- **Release Groups**: Share standardized naming conventions
+- **Archivists**: Preserve correct titles for rare releases
+- **Seeders**: Help others identify what they're downloading
+
+---
+
+## 🏗️ How It Works
+
+1. **Hash**: Generate SHA-256 hash of your file
+2. **Lookup**: Query the community database
+3. **Vote**: See which names the community prefers
+4. **Apply**: Rename your file with one command
+5. **Contribute**: Upload your naming to help others
+
+All powered by:
+- **Go** for performance
+- **Turso** (distributed SQLite) for the database
+- **RESTful API** for flexibility
+
+---
+
+## 📚 Documentation
+
+- **[Full Documentation](DOCUMENTATION.md)** - Installation, API, configuration
+- **[Quick Start Guide](QUICKSTART.md)** - Get up and running in 5 minutes
+- **[Search Feature](SEARCH_FEATURE.md)** - Advanced search capabilities
+- **[Project Structure](PROJECT_STRUCTURE.md)** - For contributors
+
+---
+
+## 🤝 Contributing
+
+Found a bug? Want to add a feature? Contributions are welcome!
+
+```bash
+# Fork the repo, make your changes, then:
+git add .
+git commit -m "feat: Add awesome feature"
+git push origin feature-branch
+# Open a PR!
+```
+
+---
+
+## 📜 License
+
+MIT License - see [LICENSE](LICENSE) for details
+
+---
+
+## 🙏 Acknowledgments
 
 Built with:
-- [Cobra](https://github.com/spf13/cobra) - CLI framework
-- [Turso](https://turso.tech) - Distributed SQLite database
-- [libsql-client-go](https://github.com/tursodatabase/libsql-client-go) - Turso Go client
+- [Cobra](https://github.com/spf13/cobra) - Powerful CLI framework
+- [Turso](https://turso.tech) - Edge-native database
+- [fuzzysearch](https://github.com/lithammer/fuzzysearch) - Fuzzy string matching
+
+---
+
+**Stop renaming files manually. Start mending with the community.** 🎬✨
