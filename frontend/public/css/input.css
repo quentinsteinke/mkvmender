@@ -94,7 +94,6 @@
   .terminal {
     @apply bg-bg-tertiary rounded-lg p-6 font-mono text-sm;
     @apply border border-border shadow-xl;
-    @apply h-64 overflow-y-auto;
   }
 
   .code-block {

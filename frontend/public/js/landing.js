@@ -208,19 +208,22 @@ function setupCopyButton() {
         try {
             await navigator.clipboard.writeText(installCommand);
 
-            // Show feedback
-            const originalHTML = copyBtn.innerHTML;
-            copyBtn.innerHTML = `
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-            `;
-            copyBtn.classList.add('!border-success', 'text-success');
+            // Show feedback - find the SVG container
+            const iconContainer = copyBtn.querySelector('.flex-shrink-0');
+            if (iconContainer) {
+                const originalHTML = iconContainer.innerHTML;
+                iconContainer.innerHTML = `
+                    <svg class="w-4 h-4 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                `;
+                iconContainer.classList.add('!border-success');
 
-            setTimeout(() => {
-                copyBtn.innerHTML = originalHTML;
-                copyBtn.classList.remove('!border-success', 'text-success');
-            }, 2000);
+                setTimeout(() => {
+                    iconContainer.innerHTML = originalHTML;
+                    iconContainer.classList.remove('!border-success');
+                }, 2000);
+            }
         } catch (error) {
             console.error('Failed to copy:', error);
             // Fallback: show alert
