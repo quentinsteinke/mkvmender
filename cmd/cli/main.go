@@ -16,7 +16,13 @@ func main() {
 		Use:   "mkvmender",
 		Short: "MKV Mender - Community-driven media file renaming tool",
 		Long: `MKV Mender helps you rename your movie and TV show rips by matching
-file hashes with community-submitted naming data.`,
+file hashes with community-submitted naming data.
+
+Configuration file: ~/.mkvmender/config.yaml
+  api_key: your-api-key-here
+  base_url: http://localhost:8080
+
+Use 'mkvmender login' to configure your API key.`,
 		Version: version,
 	}
 

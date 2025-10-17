@@ -17,7 +17,9 @@ func newLoginCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "login",
 		Short: "Configure API credentials",
-		Long:  "Set your API key and server URL for authentication.",
+		Long: `Set your API key and server URL for authentication.
+
+Configuration is saved to: ~/.mkvmender/config.yaml`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Load existing config
 			config, err := api.LoadConfig()
