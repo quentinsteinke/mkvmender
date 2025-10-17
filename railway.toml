@@ -1,0 +1,7 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "./bin/mkvmender-server"
+restartPolicyType = "always"
+restartPolicyMaxRetries = 10
