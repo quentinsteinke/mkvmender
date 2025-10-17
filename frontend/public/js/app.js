@@ -179,14 +179,25 @@ function groupResults(results) {
                 episode: result.episode,
                 hash: result.hash,
                 file_size: result.file_size,
-                submissions: []
+                submissions: [],
+                submissionIds: new Set() // Track submission IDs to prevent duplicates
             };
         }
 
-        groups[key].submissions.push(...result.submissions);
+        // Only add submissions we haven't seen before
+        result.submissions.forEach(sub => {
+            if (!groups[key].submissionIds.has(sub.id)) {
+                groups[key].submissionIds.add(sub.id);
+                groups[key].submissions.push(sub);
+            }
+        });
     });
 
-    return Object.values(groups);
+    // Clean up the submissionIds Set before returning
+    return Object.values(groups).map(group => {
+        delete group.submissionIds;
+        return group;
+    });
 }
 
 // Utilities
