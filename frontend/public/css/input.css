@@ -153,6 +153,47 @@
   .badge-suspended {
     @apply text-xs px-2 py-1 rounded-full bg-error/20 text-error border border-error/30;
   }
+
+  /* Documentation Styles */
+  .docs-section {
+    scroll-margin-top: 100px;
+  }
+
+  .docs-content table {
+    @apply w-full border-collapse;
+  }
+
+  .docs-content table th,
+  .docs-content table td {
+    @apply text-left py-3 px-4;
+  }
+
+  .docs-content table thead tr {
+    @apply border-b border-border;
+  }
+
+  .docs-content table tbody tr {
+    @apply border-b border-border last:border-b-0;
+  }
+
+  .docs-content code {
+    @apply font-mono text-sm;
+  }
+
+  .docs-content a {
+    @apply transition-colors;
+  }
+
+  .docs-content mark {
+    @apply bg-primary/30 text-text rounded px-1;
+  }
+
+  .docs-content .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 /* Animation utilities */
