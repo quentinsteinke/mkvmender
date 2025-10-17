@@ -369,6 +369,80 @@ select:focus {
     color: var(--text);
 }
 
+/* Download Section */
+.download-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s ease;
+}
+
+.download-btn:hover {
+    border-color: var(--primary);
+    background-color: var(--bg-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.download-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.download-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.download-text strong {
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.download-text small {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+}
+
+.install-instructions {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.install-instructions h3 {
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.install-instructions p {
+    margin-bottom: 0.5rem;
+}
+
+.install-instructions a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.install-instructions a:hover {
+    text-decoration: underline;
+}
+
 /* Code Examples */
 .cli-example {
     display: block;
@@ -439,5 +513,17 @@ footer a:hover {
 
     .search-options select {
         width: 100%;
+    }
+
+    .download-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .download-btn {
+        padding: 1rem;
+    }
+
+    .download-icon {
+        font-size: 1.5rem;
     }
 }

@@ -31,3 +31,4 @@ Thumbs.db
 
 # Config files with secrets
 config.yaml
+releases/

@@ -19,6 +19,67 @@
     </header>
 
     <main class="container">
+        <!-- Download Section -->
+        <section id="download-section" class="section">
+            <div class="card">
+                <h2>Download CLI Tool</h2>
+                <p>Download the MKV Mender command-line tool for your platform:</p>
+
+                <div class="download-grid">
+                    <a href="https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-darwin-amd64" class="download-btn" download>
+                        <span class="download-icon">🍎</span>
+                        <span class="download-text">
+                            <strong>macOS (Intel)</strong>
+                            <small>mkvmender-darwin-amd64</small>
+                        </span>
+                    </a>
+
+                    <a href="https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-darwin-arm64" class="download-btn" download>
+                        <span class="download-icon">🍎</span>
+                        <span class="download-text">
+                            <strong>macOS (Apple Silicon)</strong>
+                            <small>mkvmender-darwin-arm64</small>
+                        </span>
+                    </a>
+
+                    <a href="https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-linux-amd64" class="download-btn" download>
+                        <span class="download-icon">🐧</span>
+                        <span class="download-text">
+                            <strong>Linux (x86_64)</strong>
+                            <small>mkvmender-linux-amd64</small>
+                        </span>
+                    </a>
+
+                    <a href="https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-linux-arm64" class="download-btn" download>
+                        <span class="download-icon">🐧</span>
+                        <span class="download-text">
+                            <strong>Linux (ARM64)</strong>
+                            <small>mkvmender-linux-arm64</small>
+                        </span>
+                    </a>
+
+                    <a href="https://github.com/quentinsteinke/mkvmender/releases/download/v1.0.0/mkvmender-windows-amd64.exe" class="download-btn" download>
+                        <span class="download-icon">🪟</span>
+                        <span class="download-text">
+                            <strong>Windows</strong>
+                            <small>mkvmender-windows-amd64.exe</small>
+                        </span>
+                    </a>
+                </div>
+
+                <div class="install-instructions">
+                    <h3>Quick Start</h3>
+                    <p><strong>macOS/Linux:</strong> After downloading, make the binary executable:</p>
+                    <code class="cli-example">chmod +x mkvmender-*</code>
+
+                    <p style="margin-top: 1rem;"><strong>Register:</strong></p>
+                    <code class="cli-example">./mkvmender register --username yourname</code>
+
+                    <p style="margin-top: 1rem;">For full documentation, visit <a href="https://github.com/quentinsteinke/mkvmender" target="_blank">GitHub</a></p>
+                </div>
+            </div>
+        </section>
+
         <!-- Login Section -->
         <section id="login-section" class="section">
             <div class="card">
