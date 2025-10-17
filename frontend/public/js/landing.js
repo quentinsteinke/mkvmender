@@ -303,7 +303,7 @@ function setupCopyButton() {
     if (!copyBtn) return;
 
     copyBtn.addEventListener('click', async () => {
-        const installCommand = 'curl -sSL https://github.com/quentinsteinke/mkvmender/releases/latest/download/install.sh | bash';
+        const installCommand = 'curl -sSL https://raw.githubusercontent.com/quentinsteinke/mkvmender/main/install.sh | bash';
 
         try {
             await navigator.clipboard.writeText(installCommand);
