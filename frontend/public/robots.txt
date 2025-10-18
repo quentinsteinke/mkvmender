@@ -1,0 +1,11 @@
+# robots.txt for mkvmender.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://mkvmender.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1

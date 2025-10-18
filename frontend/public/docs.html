@@ -3,10 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation - MKV Mender</title>
-    <meta name="description" content="Complete documentation for MKV Mender - Community-driven file naming system for movies and TV shows">
+
+    <!-- Primary Meta Tags -->
+    <title>MKV Mender Docs - Installation, CLI Guide & API Reference 2025</title>
+    <meta name="title" content="MKV Mender Docs - Installation, CLI Guide & API Reference 2025">
+    <meta name="description" content="Complete MKV Mender documentation: installation guides for Windows, macOS, Linux. Learn CLI commands, API endpoints, configuration options, and troubleshooting. Get started in under 5 minutes with our step-by-step tutorials.">
+    <meta name="author" content="MKV Mender Community">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mkvmender.com/docs.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://mkvmender.com/docs.html">
+    <meta property="og:title" content="MKV Mender Documentation - Installation, CLI Guide, API Reference">
+    <meta property="og:description" content="Complete documentation for MKV Mender: installation guides, CLI commands, API reference, configuration options, and troubleshooting. Get started in minutes.">
+    <meta property="og:image" content="https://mkvmender.com/og-image-docs.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="MKV Mender">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mkvmender.com/docs.html">
+    <meta name="twitter:title" content="MKV Mender Documentation - Installation, CLI Guide, API Reference">
+    <meta name="twitter:description" content="Complete documentation for MKV Mender: installation guides, CLI commands, API reference, configuration options, and troubleshooting. Get started in minutes.">
+    <meta name="twitter:image" content="https://mkvmender.com/og-image-docs.png">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#2563eb">
+
     <link rel="stylesheet" href="/css/output.css">
-    <link rel="icon" href="/favicon.ico">
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://mkvmender.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Documentation",
+          "item": "https://mkvmender.com/docs.html"
+        }
+      ]
+    }
+    </script>
+
+    <!-- FAQPage Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does MKV Mender identify files?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MKV Mender uses SHA-256 hash-based file identification. It generates a unique hash from your file content and matches it against community-submitted names in our database. This ensures accurate identification even if filenames have been changed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is MKV Mender free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, MKV Mender is completely free and open source. You can use both the CLI tool and web application at no cost. The project is MIT licensed and available on GitHub."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What operating systems does MKV Mender support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MKV Mender supports Windows, macOS, and Linux. The CLI tool runs on all platforms, and the web application works in any modern browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can MKV Mender rename files in batch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, MKV Mender includes powerful batch processing capabilities. You can rename entire directories of files at once using the CLI tool with the batch command."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does MKV Mender work with Plex and Jellyfin?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, MKV Mender follows standard naming conventions compatible with Plex, Jellyfin, and other media server software. Files renamed with MKV Mender will be correctly identified by these services."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body class="min-h-screen">
     <!-- Header with Search -->
@@ -106,7 +212,7 @@
                 <!-- Hero Section -->
                 <section class="mb-16">
                     <h1 class="text-5xl font-bold mb-4 gradient-text">Documentation</h1>
-                    <p class="text-xl text-text-secondary">Everything you need to know about using MKV Mender</p>
+                    <p class="text-xl text-text-secondary">Everything you need to know about using MKV Mender. New to the project? Start with our <a href="/#how-it-works" class="text-primary hover:underline" title="See how MKV Mender works">overview</a> or try the <a href="/app.html" class="text-primary hover:underline" title="Web-based file naming tool">web app</a>.</p>
                 </section>
 
                 <!-- Quick Start -->
@@ -191,13 +297,14 @@
                     </div>
 
                     <h3 class="text-xl font-bold mb-4">Build from Source</h3>
-                    <p class="text-text-secondary mb-4">If you prefer to build from source:</p>
+                    <p class="text-text-secondary mb-4">If you prefer to build from source, check out our <a href="https://github.com/quentinsteinke/mkvmender" target="_blank" rel="noopener" class="text-primary hover:underline" title="GitHub repository">GitHub repository</a>:</p>
                     <div class="terminal">
                         <div class="text-primary mb-2">$ git clone https://github.com/quentinsteinke/mkvmender.git</div>
                         <div class="text-primary mb-2">$ cd mkvmender</div>
                         <div class="text-primary mb-2">$ go build -o mkvmender ./cmd/cli</div>
                         <div class="text-primary">$ sudo mv mkvmender /usr/local/bin/</div>
                     </div>
+                    <p class="text-text-secondary mt-4">Prefer not to install? Use our <a href="/app.html" class="text-primary hover:underline" title="Browser-based alternative">web application</a> instead - no installation required.</p>
                 </section>
 
                 <!-- Authentication -->
@@ -332,7 +439,7 @@
                     </div>
 
                     <h3 class="text-xl font-bold mb-4">Batch Processing</h3>
-                    <p class="text-text-secondary mb-4">Process entire directories at once:</p>
+                    <p class="text-text-secondary mb-4">Process entire directories at once. Perfect for organizing large <a href="/#features" class="text-primary hover:underline" title="Media library organization">media libraries</a>:</p>
                     <div class="terminal mb-4">
                         <div class="text-primary">$ mkvmender batch /path/to/movies/</div>
                         <div class="text-success mt-2">✓ Processing 12 files...</div>
@@ -707,14 +814,20 @@
                     © 2024 MKV Mender. Open source under MIT License.
                 </div>
                 <div class="flex gap-6">
-                    <a href="https://github.com/quentinsteinke/mkvmender" target="_blank" rel="noopener" class="text-text-secondary hover:text-text transition-colors">
+                    <a href="/" class="text-text-secondary hover:text-text transition-colors" title="MKV Mender homepage">
+                        Home
+                    </a>
+                    <a href="/app.html" class="text-text-secondary hover:text-text transition-colors" title="Web application">
+                        Web App
+                    </a>
+                    <a href="https://github.com/quentinsteinke/mkvmender" target="_blank" rel="noopener" class="text-text-secondary hover:text-text transition-colors" title="View source code">
                         GitHub
                     </a>
-                    <a href="https://github.com/quentinsteinke/mkvmender/issues" target="_blank" rel="noopener" class="text-text-secondary hover:text-text transition-colors">
+                    <a href="https://github.com/quentinsteinke/mkvmender/issues" target="_blank" rel="noopener" class="text-text-secondary hover:text-text transition-colors" title="Report issues">
                         Issues
                     </a>
-                    <a href="/" class="text-text-secondary hover:text-text transition-colors">
-                        Home
+                    <a href="https://github.com/quentinsteinke/mkvmender/discussions" target="_blank" rel="noopener" class="text-text-secondary hover:text-text transition-colors" title="Community discussions">
+                        Discussions
                     </a>
                 </div>
             </div>

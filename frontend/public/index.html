@@ -3,9 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MKV Mender - Community-driven file naming for movie and TV show rips. Hash-based identification with community voting.">
-    <title>MKV Mender - Community File Naming for Media</title>
+
+    <!-- Primary Meta Tags -->
+    <title>MKV Mender - Community File Naming for Media Collections 2025</title>
+    <meta name="title" content="MKV Mender - Community File Naming for Media Collections 2025">
+    <meta name="description" content="MKV Mender uses hash-based file identification and community voting to accurately rename your movie and TV show rips. Free CLI tool with batch processing, fuzzy search, and Plex/Jellyfin integration. Start organizing your media library today.">
+    <meta name="author" content="MKV Mender Community">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mkvmender.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mkvmender.com/">
+    <meta property="og:title" content="MKV Mender - Community-Driven File Naming for Media Collections">
+    <meta property="og:description" content="Hash-based file identification with community voting. Rename your movie and TV show rips accurately with batch processing and fuzzy search. Free and open source.">
+    <meta property="og:image" content="https://mkvmender.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="MKV Mender">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mkvmender.com/">
+    <meta name="twitter:title" content="MKV Mender - Community-Driven File Naming for Media Collections">
+    <meta name="twitter:description" content="Hash-based file identification with community voting. Rename your movie and TV show rips accurately with batch processing and fuzzy search. Free and open source.">
+    <meta name="twitter:image" content="https://mkvmender.com/og-image.png">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#2563eb">
+
     <link rel="stylesheet" href="/css/output.css">
+
+    <!-- SoftwareApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "MKV Mender",
+      "description": "Community-driven file naming tool for movie and TV show rips. Hash-based file identification with community voting, batch processing, and fuzzy search.",
+      "url": "https://mkvmender.com",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": ["Windows", "macOS", "Linux"],
+      "softwareVersion": "1.0.0",
+      "datePublished": "2025-01-15",
+      "dateModified": "2025-01-18",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Hash-based file identification",
+        "Community voting system",
+        "Batch file processing",
+        "Fuzzy search capabilities",
+        "CLI and web interface",
+        "Plex and Jellyfin integration"
+      ],
+      "downloadUrl": "https://github.com/quentinsteinke/mkvmender/releases",
+      "codeRepository": "https://github.com/quentinsteinke/mkvmender",
+      "programmingLanguage": "Go",
+      "author": {
+        "@type": "Organization",
+        "name": "MKV Mender Community",
+        "url": "https://github.com/quentinsteinke"
+      },
+      "license": "https://opensource.org/licenses/MIT"
+    }
+    </script>
 </head>
 <body class="min-h-screen">
     <!-- Navigation -->
@@ -62,7 +136,7 @@
                     File Naming for Media
                 </h1>
                 <p class="text-xl md:text-2xl text-text-secondary mb-8 animate-fade-in">
-                    Stop manually renaming your media files. Hash your files, lookup community-submitted names, and vote on the best conventions.
+                    Stop manually renaming your media files. <a href="/docs.html#workflows" class="text-primary hover:underline" title="Learn about hash-based file identification">Hash your files</a>, lookup community-submitted names, and vote on the best conventions. Perfect for <a href="/docs.html#quick-start" class="text-primary hover:underline" title="Plex and Jellyfin integration guide">Plex and Jellyfin</a> users.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8 animate-slide-up">
@@ -135,7 +209,7 @@
                     <div class="text-4xl mb-4">🔐</div>
                     <h3 class="text-2xl font-bold mb-3">Hash-Based Identification</h3>
                     <p class="text-text-secondary">
-                        Uses SHA-256 hashing to uniquely identify files. Same content always produces the same hash, ensuring accurate matching across the community.
+                        Uses SHA-256 hashing to uniquely identify files. Same content always produces the same hash, ensuring accurate matching across the community. <a href="/docs.html#faq" class="text-primary hover:underline" title="Learn how hashing works">Learn more about our hashing algorithm</a>.
                     </p>
                 </div>
 
@@ -171,7 +245,7 @@
                     <div class="text-4xl mb-4">⚡</div>
                     <h3 class="text-2xl font-bold mb-3">CLI First</h3>
                     <p class="text-text-secondary">
-                        Powerful command-line interface for batch processing and automation. Integrate seamlessly into your workflow.
+                        Powerful command-line interface for <a href="/docs.html#advanced" class="text-primary hover:underline" title="Batch processing guide">batch processing</a> and automation. Integrate seamlessly into your workflow. Prefer a GUI? Try our <a href="/app.html" class="text-primary hover:underline" title="Browser-based file naming tool">web app</a>.
                     </p>
                 </div>
 
@@ -356,27 +430,32 @@
                 <div>
                     <h3 class="font-bold mb-4">Product</h3>
                     <ul class="space-y-2 text-text-secondary">
-                        <li><a href="#features" class="hover:text-text transition-colors">Features</a></li>
-                        <li><a href="#how-it-works" class="hover:text-text transition-colors">How It Works</a></li>
-                        <li><a href="/app.html" class="hover:text-text transition-colors">Web App</a></li>
+                        <li><a href="#features" class="hover:text-text transition-colors" title="View MKV Mender features">Features</a></li>
+                        <li><a href="#how-it-works" class="hover:text-text transition-colors" title="Learn how hash-based identification works">How It Works</a></li>
+                        <li><a href="/app.html" class="hover:text-text transition-colors" title="Use MKV Mender in your browser">Web App</a></li>
+                        <li><a href="/docs.html#installation" class="hover:text-text transition-colors" title="Installation guide for all platforms">Download CLI</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h3 class="font-bold mb-4">Resources</h3>
                     <ul class="space-y-2 text-text-secondary">
-                        <li><a href="/docs.html" class="hover:text-text transition-colors">Documentation</a></li>
-                        <li><a href="https://github.com/quentinsteinke/mkvmender" target="_blank" class="hover:text-text transition-colors">GitHub</a></li>
-                        <li><a href="https://github.com/quentinsteinke/mkvmender/releases" target="_blank" class="hover:text-text transition-colors">Releases</a></li>
-                        <li><a href="https://github.com/quentinsteinke/mkvmender/issues" target="_blank" class="hover:text-text transition-colors">Report Issues</a></li>
+                        <li><a href="/docs.html" class="hover:text-text transition-colors" title="Complete MKV Mender documentation">Documentation</a></li>
+                        <li><a href="/docs.html#quick-start" class="hover:text-text transition-colors" title="5-minute quick start guide">Quick Start</a></li>
+                        <li><a href="/docs.html#commands" class="hover:text-text transition-colors" title="CLI command reference">CLI Reference</a></li>
+                        <li><a href="https://github.com/quentinsteinke/mkvmender" target="_blank" rel="noopener" class="hover:text-text transition-colors" title="View source code on GitHub">GitHub</a></li>
+                        <li><a href="https://github.com/quentinsteinke/mkvmender/releases" target="_blank" rel="noopener" class="hover:text-text transition-colors" title="Download latest release">Releases</a></li>
+                        <li><a href="https://github.com/quentinsteinke/mkvmender/issues" target="_blank" rel="noopener" class="hover:text-text transition-colors" title="Report bugs and issues">Report Issues</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h3 class="font-bold mb-4">Community</h3>
                     <ul class="space-y-2 text-text-secondary">
-                        <li><a href="https://github.com/quentinsteinke/mkvmender/discussions" target="_blank" class="hover:text-text transition-colors">Discussions</a></li>
-                        <li><a href="https://github.com/quentinsteinke/mkvmender/blob/main/CONTRIBUTING.md" target="_blank" class="hover:text-text transition-colors">Contributing</a></li>
+                        <li><a href="https://github.com/quentinsteinke/mkvmender/discussions" target="_blank" rel="noopener" class="hover:text-text transition-colors" title="Join community discussions">Discussions</a></li>
+                        <li><a href="https://github.com/quentinsteinke/mkvmender/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" class="hover:text-text transition-colors" title="Contribution guidelines">Contributing</a></li>
+                        <li><a href="/docs.html#faq" class="hover:text-text transition-colors" title="Frequently asked questions">FAQ</a></li>
+                        <li><a href="/docs.html#troubleshooting" class="hover:text-text transition-colors" title="Common issues and solutions">Troubleshooting</a></li>
                     </ul>
                 </div>
             </div>

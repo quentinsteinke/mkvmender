@@ -3,8 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MKV Mender - Community File Naming</title>
+
+    <!-- Primary Meta Tags -->
+    <title>MKV Mender Web App - Rename Files Online with Hash Lookup 2025</title>
+    <meta name="title" content="MKV Mender Web App - Rename Files Online with Hash Lookup 2025">
+    <meta name="description" content="Use MKV Mender in your browser to search for file names by hash, submit new community names, and vote on submissions. No installation required. Free web interface for media file organization with real-time search.">
+    <meta name="author" content="MKV Mender Community">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mkvmender.com/app.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mkvmender.com/app.html">
+    <meta property="og:title" content="MKV Mender Web App - Rename Files Online">
+    <meta property="og:description" content="Use MKV Mender in your browser. Search for file names, submit new names, vote on community submissions. No installation required.">
+    <meta property="og:image" content="https://mkvmender.com/og-image-app.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="MKV Mender">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mkvmender.com/app.html">
+    <meta name="twitter:title" content="MKV Mender Web App - Rename Files Online">
+    <meta name="twitter:description" content="Use MKV Mender in your browser. Search for file names, submit new names, vote on community submissions. No installation required.">
+    <meta name="twitter:image" content="https://mkvmender.com/og-image-app.png">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#2563eb">
+
     <link rel="stylesheet" href="/css/output.css">
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://mkvmender.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Web App",
+          "item": "https://mkvmender.com/app.html"
+        }
+      ]
+    }
+    </script>
 </head>
 <body class="min-h-screen flex flex-col">
     <!-- Navigation -->
@@ -35,8 +93,9 @@
         <section id="login-section" class="max-w-2xl mx-auto">
             <div class="card animate-fade-in">
                 <h2 class="text-3xl font-bold mb-4">Login</h2>
-                <p class="text-text-secondary mb-4">Enter your API key to get started. Don't have one? Register using the CLI tool:</p>
+                <p class="text-text-secondary mb-4">Enter your API key to get started. Don't have one? <a href="/docs.html#authentication" class="text-primary hover:underline" title="Learn how to register">Register using the CLI tool</a>:</p>
                 <div class="code-block mb-6">mkvmender register</div>
+                <p class="text-text-secondary text-sm mb-6">Need help? Check our <a href="/docs.html#quick-start" class="text-primary hover:underline" title="Installation and setup guide">quick start guide</a> or read the <a href="/docs.html" class="text-primary hover:underline" title="Full documentation">full documentation</a>.</p>
 
                 <form id="login-form" class="space-y-6">
                     <div>
@@ -53,7 +112,7 @@
         <section id="search-section" class="hidden">
             <div class="card mb-8 animate-fade-in">
                 <h2 class="text-3xl font-bold mb-4">Search Database</h2>
-                <p class="text-text-secondary mb-6">Search for movies and TV shows in the community database</p>
+                <p class="text-text-secondary mb-6">Search for movies and TV shows in the community database. Prefer the <a href="/docs.html#commands" class="text-primary hover:underline" title="CLI command reference">command line</a>? Check out our <a href="/docs.html#advanced" class="text-primary hover:underline" title="Batch processing guide">CLI tool for batch processing</a>.</p>
 
                 <form id="search-form" class="space-y-6">
                     <div>
@@ -249,10 +308,16 @@
 
     <footer class="border-t border-border py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-6">
-            <p class="text-center text-text-secondary">
-                MKV Mender - Open Source •
-                <a href="https://github.com/quentinsteinke/mkvmender" target="_blank" class="text-primary hover:underline">GitHub</a> •
-                <a href="/" class="text-primary hover:underline">Back to Home</a>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-text-secondary text-sm">
+                <span>MKV Mender - Open Source</span>
+                <a href="/" class="text-primary hover:underline" title="MKV Mender homepage">Home</a>
+                <a href="/docs.html" class="text-primary hover:underline" title="Complete documentation">Documentation</a>
+                <a href="/docs.html#installation" class="text-primary hover:underline" title="Download CLI tool">Download CLI</a>
+                <a href="https://github.com/quentinsteinke/mkvmender" target="_blank" rel="noopener" class="text-primary hover:underline" title="View source code">GitHub</a>
+                <a href="https://github.com/quentinsteinke/mkvmender/discussions" target="_blank" rel="noopener" class="text-primary hover:underline" title="Community discussions">Discussions</a>
+            </div>
+            <p class="text-center text-text-muted text-xs mt-4">
+                © 2025 MKV Mender. Released under the MIT License.
             </p>
         </div>
     </footer>
