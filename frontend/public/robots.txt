@@ -5,7 +5,7 @@ Disallow: /api/
 Disallow: /admin/
 
 # Sitemap location
-Sitemap: https://mkvmender.com/sitemap.xml
+Sitemap: https://mkvmender.org/sitemap.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
